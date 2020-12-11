@@ -1,4 +1,4 @@
-import React, { useDtate } from 'react';
+import React from 'react';
 
 const TodoFilter = (props) => {
 

@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 export const addTodo = text => {
     return {
@@ -32,3 +33,40 @@ export const decreaseCounter = () => {
         type: 'DECREASE_COUNTER'
     }
 };
+
+const requestStart = () => {
+
+    return {
+        type: 'FETCH_USER_START'
+    }
+}
+
+const requestFail = (error) => {
+
+    return {
+        type: 'FETCH_USER_FAIL',
+        error,
+    }
+}
+
+const requestSuccess = (response) => {
+
+    return {
+        type: 'FETCH_USER_SUCCESS',
+        data: response.data,
+    }
+}
+
+export const getData = (url) => {
+
+    return (dispatch, getState) => {
+        dispatch(requestStart());
+        axios.get(url)
+            .then(res => {
+                dispatch(requestSuccess(res))
+            })
+            .catch(e => dispatch(requestFail(e)))
+    }
+}
+
+// 'https://api.github.com/users?per_page=100'
